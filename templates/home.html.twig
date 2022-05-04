@@ -1,8 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block title "Home" %}
-
+{# npx tailwindcss -i ./assets/styles/app.css -o ./public/build/app.css --watch #}
 {% block body %}
-        <h1 class="text-blue-500 container text-lg" > Hello world</h1>
+        <main class=' flex flex-col lg:flex-row'>
+    <section class=' pl-2 md:pl-8 pt-14'>
+        <p class='text-normal text-gray-600'>10+ stays - <span class='bg-gray-200 rounded-md px-2 py-1'>{formattedStartDate}</span> to <span class='bg-gray-200 rounded-md px-2 py-1'>{formattedEndDate}</span> for {noGuests} guests</p>
+        <h1 class='text-4xl font-bold mt-4 text-gray-800'>{location?`Stays in ${location}`:'Stays everywhere'}</h1>
+    
+        <div class='flex flex-col space-y-4 mt-8'>
+            <div  class='flex flex-col md:flex-row space-x-4 md:space-x-7 font-body rounded-2xl py-4 md:py-7 px-2 md:pr-6 border-b group hover:shadow-xl hover:opacity-90 first:border-t'>
+              <div class='relative flex items-center justify-between mx-auto w-80 h-52 md:w-80 md:h-52 flex-shrink-0 group-hover:scale-95 transform transition duration-300 ease-out'>
+                  <img 
+                      src="https://d2slcw3kip6qmk.cloudfront.net/marketing/pages/chart/product-page/people-management-persona.png"    
+                  />
+              </div>
+      <div onClick={showHotel} class='flex flex-col flex-grow mt-4 cursor-pointer'>
+          <div class='flex mr-2 md:mr-0 justify-between' >
+              <h1 class='text-gray-500 text-sm  md:text-lg'>{location}</h1>
+              
+          </div>    
+          <h1 class='md:text-xl text-base text-gray-600 font-semibold'>{title}</h1>
+          <p class="mt-2 text-base md:text-lg text-gray-400 font-medium flex-grow">{description}</p>
+          <div class='flex justify-between items-end pb-5'>
+              <p class='flex items-center py-1'>
+                  <StarIcon class='h-5 text-red-400'/>
+                  {star}
+              </p>
+              <div class='flex mr-2 md:mr-0 flex-col items-end'>
+                  <p class='text-lg lg:text-2xl font-semibold text-gray-700'>{price}€<span class='font-normal text-base'> /night</span></p>
+                  <p class='text-sm text-gray-400'>{dayDiff? dayDiff*price+6*noGuests:price+6*noGuests}€ total</p>
+              </div>
+          </div>
+      </div>
+      </div>
+      </div>
+  </section>
+        
+</main>
    
 {% endblock %}
