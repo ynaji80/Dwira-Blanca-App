@@ -47,6 +47,19 @@ class PlanRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Plan[]
+     */
+    public function getPlans()
+    {
+        return $this->createQueryBuilder('p')
+                    ->orderBy('p.rating','DESC')
+                    ->where('p.isActive=1')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Plan[] Returns an array of Plan objects
     //  */

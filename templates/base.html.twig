@@ -8,6 +8,10 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <!-- component -->
+        <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+        <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+
             <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
         <script>
@@ -28,7 +32,9 @@
         {% endblock %}
     </head>
     <body>
+        {% include 'base/header.html.twig' %}
         {% block body %}{% endblock %}
+        {% include 'base/footer.html.twig' %}
     </body>
     
 </html>

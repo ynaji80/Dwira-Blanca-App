@@ -24,7 +24,11 @@ docker-compose up -d
 symfony server:start
 
 ```
+### Add data
 
+```bash
+symfony console doctrine:fixtures:load
+```
 ## do tests
 
 ```bash
