@@ -3,7 +3,7 @@
 {% block title %}Discover Best Places!{% endblock %}
 
 {% block body %}
-    {% include 'header.html.twig' %}
+    
 
     <section class="text-gray-600 body-font py-10">
         
@@ -24,16 +24,17 @@
         </div>
         <div class=" mx-auto flex px-20 space-x-4 ">
             <div class="flex flex-col flex-wrap space-y-4 lg:w-1/2 lg:text-left text-center">
-                {% include 'planCard.html.twig' %}
-                {% include 'planCard.html.twig' %}
-                {% include 'planCard.html.twig' %}
+            {% for plan in plans %}
+                {% include 'plans/planCard.html.twig' with {id: plan.id , "title": plan.title, "description": plan.description, "type": plan.type, "rating": plan.rating}  %}
+            {% endfor %}
+                
             </div>
             <div class="lg:w-1/2 w-full  rounded-lg overflow-hidden">
                 <img alt="feature" class="object-cover object-center h-full w-full" src="https://dummyimage.com/460x500">
             </div>
         </div>
 
-        <div class=" mt-10 flex justify-center">
+        {# <div class=" mt-10 flex justify-center">
             <nav aria-label="Page navigation example">
                 <ul class="flex list-style-none">
                 <li class="page-item disabled"><a
@@ -53,8 +54,14 @@
                     href="#">Next</a></li>
                 </ul>
             </nav>
+        </div> #}
+
+        <div class="d-flex mt-6 justify-content-center">
+            {% do plans.setPageRange(2) %}
+            {{knp_pagination_render(plans,'base/pagination.html.twig')}}
         </div>
+
     </section>
 
-    {% include 'footer.html.twig' %}
+    
 {% endblock %}

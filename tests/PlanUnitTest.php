@@ -22,7 +22,12 @@ class PlanUnitTest extends TestCase
             ->setLongitude(20.20)
             ->setLatitude(20.20)
             ->setCreatedAt($datetime)
-            ->setSlug("slug");
+            ->setSlug("slug")
+            ->setLocation("location")
+            ->setNumber("number")
+            ->setEmail("email")
+            ->setWebsite("website")
+            ->setIsActive(true);
         $this->assertTrue($plan->getName()==="name");
         $this->assertTrue($plan->getTitle()==="title");
         $this->assertTrue($plan->getDescription()==="description");
@@ -32,8 +37,12 @@ class PlanUnitTest extends TestCase
         $this->assertTrue($plan->getLatitude()==20.20);
         $this->assertTrue($plan->getCreatedAt()===$datetime);
         $this->assertTrue($plan->getSlug()==="slug");
-
-    } 
+        $this->assertTrue($plan->getLocation()==="location");
+        $this->assertTrue($plan->getNumber()==="number");
+        $this->assertTrue($plan->getEmail()==="email");
+        $this->assertTrue($plan->getWebsite()==="website");
+        $this->assertTrue($plan->getIsActive()===true);
+    }
     
     public function testIsFalse()
     {
@@ -48,7 +57,12 @@ class PlanUnitTest extends TestCase
             ->setLongitude(20.20)
             ->setLatitude(20.20)
             ->setCreatedAt($datetime)
-            ->setSlug("slug");
+            ->setSlug("slug")
+            ->setLocation("location")
+            ->setNumber("number")
+            ->setEmail("email")
+            ->setWebsite("website")
+            ->setIsActive(true);
         $this->assertFalse($plan->getName()==="false");
         $this->assertFalse($plan->getTitle()==="false");
         $this->assertFalse($plan->getDescription()==="false");
@@ -58,7 +72,11 @@ class PlanUnitTest extends TestCase
         $this->assertFalse($plan->getLatitude()==24.20);
         $this->assertFalse($plan->getCreatedAt()=== new DateTimeImmutable());
         $this->assertFalse($plan->getSlug()==="false");
-
+        $this->assertFalse($plan->getLocation()==="false");
+        $this->assertFalse($plan->getNumber()==="false");
+        $this->assertFalse($plan->getEmail()==="false");
+        $this->assertFalse($plan->getWebsite()==="false");
+        $this->assertFalse($plan->getIsActive()===false);
     }
 
     public function testIsEmpty()
@@ -74,6 +92,10 @@ class PlanUnitTest extends TestCase
         $this->assertEmpty($plan->getLatitude());
         $this->assertEmpty($plan->getCreatedAt());
         $this->assertEmpty($plan->getSlug());
-
+        $this->assertEmpty($plan->getNumber());
+        $this->assertEmpty($plan->getEmail());
+        $this->assertEmpty($plan->getWebsite());
+        $this->assertEmpty($plan->getLocation());
+        $this->assertEmpty($plan->getIsActive());
     }
 }
