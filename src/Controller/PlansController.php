@@ -13,15 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlansController extends AbstractController
 {
     #[Route('/plans', name: 'app_plans')]
-    public function index(PlanRepository $planRepository, PaginatorInterface $paginator, Request $request): Response
-
-    {
+    public function index(
+        PlanRepository $planRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
         // $calendar= $planRepository->getPlans()[0]->getCalendar();
         // foreach($calendar as $day => $time) {
         //     dump("{$day} : {$time}");
         // }
-        $data= $planRepository->findAll();
-        $plans=$paginator->paginate(
+        $data = $planRepository->findAll();
+        $plans = $paginator->paginate(
             $data,
             $request->query->getInt("page", 1),
             4
@@ -30,7 +32,7 @@ class PlansController extends AbstractController
             'plans' => $plans,
         ]);
     }
-    #[Route('/plans/{id<[0-9]+>}', name: 'app_plan_show', methods:["GET"])]
+    #[Route('/plans/{slug}', name: 'app_plan_show', methods: ["GET"])]
     public function show(Plan $plan): Response
     {
         return $this->render("plans/planDetail.html.twig", ["plan" => $plan]);

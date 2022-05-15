@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title post.title %}
+
+
+{% block body %}
+<div class="row">
+<div class="col-md-6 mx-auto">
+<article>
+ 
+<article class="bg-white rounded shadow post">
+   <div class="mw-100 rounded-top overflow-hidden">
+   {% if post.imageName %}
+      <img src="{{  vich_uploader_asset(post) | imagine_filter('squard_med') }}" alt="{{ post.title }}" class="w-100 ">  
+      {% else %}
+      <img src="{{  asset('images/placeholder.jpg') | imagine_filter('squard_med') }}" alt="{{ post.title }}" class="w-100 ">
+      {% endif %}
+      </div>
+      <h2 class="h5 ps-5 pt-3 text-secondary text-muted">{{ post.title }}</h2> 
+      <p class="ps-5 pb-3 text-muted"><small>Submitted at {{ post.createdAt|ago }} by {{ post.user.userName }}</small></p>
+      <h3 class="h6 ps-5 pt-3 text-secondary text-muted">{{ post.miniTitle }}</h3>
+      <h3 class="h6 ps-5 pt-3 text-secondary text-muted">{{ post.OneWordPov }} and {{ post.mark }}/10 </h3>
+      <p class="h6 ps-5 pt-3 text-secondary text-muted">Location : {{ post.location }}</p>
+      <div class="ps-5 pt-3 pe-5 text-break">
+      {{ post.reviewArticle }}
+      </div>
+     <div class="ps-3 pb-3"> 
+<a href="{{  path('app_posts_edit',{id: post.id}) }}" class="btn btn-light">Edit</a> 
+<a href="#" onclick="event.preventDefault(); confirm('Are you sure?') && document.getElementById('js-post-delete-form').submit(); " class="btn btn-light">Delete</a>
+ </div>
+  </article>
+
+
+</div>
+</div>
+
+
+
+<form id="js-post-delete-form" action="{{  path('app_posts_delete',{id: post.id}) }}" method="post" style="display:none;"> 
+  <input type="hidden" name="csrf_token" value="{{ csrf_token('post_deletion'~ post.id) }}">
+  <input type="hidden" name="_method" value="DELETE">
+</form>
+{% endblock %}

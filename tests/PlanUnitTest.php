@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use App\Entity\Plan;
+use App\Entity\User;
 use DateTime;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -13,6 +14,7 @@ class PlanUnitTest extends TestCase
     {
         $plan = new Plan();
         $datetime = new DateTimeImmutable();
+        $user = new User();
 
         $plan->setName("name")
             ->setTitle("title")
@@ -27,7 +29,9 @@ class PlanUnitTest extends TestCase
             ->setNumber("number")
             ->setEmail("email")
             ->setWebsite("website")
-            ->setIsActive(true);
+            ->setIsActive(true)
+            ->setUser($user);
+
         $this->assertTrue($plan->getName()==="name");
         $this->assertTrue($plan->getTitle()==="title");
         $this->assertTrue($plan->getDescription()==="description");
@@ -42,12 +46,14 @@ class PlanUnitTest extends TestCase
         $this->assertTrue($plan->getEmail()==="email");
         $this->assertTrue($plan->getWebsite()==="website");
         $this->assertTrue($plan->getIsActive()===true);
+        $this->assertTrue($plan->getUser()=== $user);
     }
     
     public function testIsFalse()
     {
         $plan = new Plan();
         $datetime = new DateTimeImmutable();
+        $user = new User();
 
         $plan->setName("name")
             ->setTitle("title")
@@ -62,7 +68,8 @@ class PlanUnitTest extends TestCase
             ->setNumber("number")
             ->setEmail("email")
             ->setWebsite("website")
-            ->setIsActive(true);
+            ->setIsActive(true)
+            ->setUser($user);
         $this->assertFalse($plan->getName()==="false");
         $this->assertFalse($plan->getTitle()==="false");
         $this->assertFalse($plan->getDescription()==="false");
@@ -77,6 +84,7 @@ class PlanUnitTest extends TestCase
         $this->assertFalse($plan->getEmail()==="false");
         $this->assertFalse($plan->getWebsite()==="false");
         $this->assertFalse($plan->getIsActive()===false);
+        $this->assertFalse($plan->getUser()=== new User());
     }
 
     public function testIsEmpty()
@@ -97,5 +105,6 @@ class PlanUnitTest extends TestCase
         $this->assertEmpty($plan->getWebsite());
         $this->assertEmpty($plan->getLocation());
         $this->assertEmpty($plan->getIsActive());
+        $this->assertEmpty($plan->getUser());
     }
 }

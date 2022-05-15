@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Edit Post #' ~ post.id %}
+
+
+{% block body %}
+
+<div class="row">
+         <div class="col-md-6 mx-auto">
+      
+      <h1> Edit Post #{{ post.id }}</h1>
+   
+   {{ form_start(formEditPost)}}
+      
+      {{ form_widget(formEditPost)}}
+
+      <input type="submit" value="Edit Post" class="btn btn-primary">
+   {{ form_end(formEditPost)}}
+
+         </div>
+     </div>
+
+  
+
+{% endblock %}
+ 
