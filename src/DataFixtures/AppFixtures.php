@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('user@test.com')
             ->setUsername($faker->userName())
-            ->setUserType('simple')
+            ->setRoles(['ROLE_OWNER'])
             ->setFirstName($faker->firstName())
             ->setLastName($faker->lastName());
         $password=$this->hasher->hashPassword($user,'password');

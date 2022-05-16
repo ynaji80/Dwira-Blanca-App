@@ -9,21 +9,34 @@
 		</a>
 		<ul class="items-stretch hidden space-x-3 lg:flex">
 			<li class="flex">
-				<a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent dark:text-sky-700 dark:border-sky-700">Link</a>
+				<a rel="noopener noreferrer" href="{{path('app_plans')}}" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent ">Plans</a>
 			</li>
 			<li class="flex">
-				<a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent">Link</a>
+				<a rel="noopener noreferrer" href="{{path('app_posts')}}" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent">Blogs</a>
 			</li>
-			<li class="flex">
-				<a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent">Link</a>
-			</li>
-			<li class="flex">
-				<a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent">Link</a>
-			</li>
+
 		</ul>
 		<div class="items-center flex-shrink-0 hidden lg:flex">
-			<button class="self-center px-8 py-3 rounded">Sign in</button>
-			<button class="self-center px-8 py-3 font-semibold rounded bg-sky-700 text-white">Sign up</button>
+			
+			 {% if app.user %}
+			 {% for role in app.user.roles %}
+				 {% if role == "ROLE_OWNER" %}
+				 	<li class="self-center px-8 py-3 ml-4 font-semibold rounded bg-sky-700 text-white"><a class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent" href="{{path('app_plan_create')}}">Add Plan</a></li>
+			
+			 {% endif %}
+			 {% endfor %}
+			 
+			 
+				<li class="self-center px-8 py-3 ml-4 font-semibold rounded bg-sky-700 text-white"><a class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent" href="{{  path('app_posts_create')}}" class="nav-link">Add Post</a></li>
+		
+				<li class="self-center px-8 py-3 ml-4 font-semibold rounded bg-sky-700 text-white" ><a href="{{  path('app_profile')}}" >Profile</a></li>
+				<li class="self-center px-8 py-3 ml-4 font-semibold rounded bg-sky-700 text-white" ><a href="{{  path('app_logout')}}" >Logout</a></li>
+				<li class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent font-semibold text-lg" >Hello {{app.user.firstName}}</li>
+        {% else %}
+       		<button class="self-center px-8 py-3 rounded bg-sky-700 text-white"><a href="{{path('app_login')}}">Sign in</a></button>
+			<button class="self-center px-8 py-3 ml-4 font-semibold rounded bg-sky-700 text-white"><a href="{{path('app_register')}}">Sign up</a></button>
+
+        {% endif %}
 		</div>
 		<button class="p-4 lg:hidden">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 dark:text-coolGray-100">

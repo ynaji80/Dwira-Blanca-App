@@ -26,7 +26,7 @@ class RegistrationFormType extends AbstractType
             ->add('user_type',ChoiceType::class,[
                 'choices'  => [
                   'simple' => 'simple',
-                  'restaurant' => 'restaurant',
+                  'Owner' => 'Owner',
                 ],])
             ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
