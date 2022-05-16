@@ -14,12 +14,12 @@
    <article class="bg-white rounded shadow post">
    <div class="mw-100 rounded-top overflow-hidden">
    {% if post.imageName %}
-      <a href="{{  path('app_posts_details',{id: post.id }) }}"><img src="{{  vich_uploader_asset(post) | imagine_filter('squard_med') }}" alt="{{ post.title }}" class="w-100 "></a>  
+      <a href="{{  path('app_posts_details',{slug: post.slug }) }}"><img src="{{  vich_uploader_asset(post) | imagine_filter('squard_med') }}" alt="{{ post.title }}" class="w-100 "></a>  
       {% else %}
-       <a href="{{  path('app_posts_details',{id: post.id }) }}"><img src="{{  asset('images/placeholder.jpg') | imagine_filter('squard_med') }}" alt="{{ post.title }}" class="w-100 "></a>
+       <a href="{{  path('app_posts_details',{slug: post.slug }) }}"><img src="{{  asset('images/placeholder.jpg') | imagine_filter('squard_med') }}" alt="{{ post.title }}" class="w-100 "></a>
       {% endif %}
       </div>
-      <h2 class="h5 ps-5 pt-3"><a href="{{  path('app_posts_details',{id: post.id }) }}" class="text-secondary text-muted text-decoration-none ">{{ post.title }}</a></h2>
+      <h2 class="h5 ps-5 pt-3"><a href="{{  path('app_posts_details',{slug: post.slug }) }}" class="text-secondary text-muted text-decoration-none ">{{ post.title }}</a></h2>
       <p class="ps-5 pb-3 text-muted"><small>Submitted at {{ post.createdAt|ago }} by {{ post.user.userName }} </small></p>
        </article>
        </div>

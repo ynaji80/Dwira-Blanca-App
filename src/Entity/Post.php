@@ -39,6 +39,9 @@ class Post
     private $mark;
 
     #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
+
+    #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
     private $location;
 
@@ -121,6 +124,18 @@ class Post
     public function setLocation(?string $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

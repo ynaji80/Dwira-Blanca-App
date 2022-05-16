@@ -16,20 +16,19 @@ use Symfony\Component\Security\Core\Security;
 class MailerService
 {
 
-    // private $reservationRepository;
-    // private $mailer;
-    // private $reservationService;
-    // private $userRepository;
-    // private $security;
+    private $reservationRepository;
+    private $mailer;
+    private $reservationService;
     
     public function __construct(
-        private MailerInterface $mailer)
+         MailerInterface $mailer,
+         ReservationService $reservationService,
+         ReservationRepository $reservationRepository
+         )
     {
-    //     $this->reservationRepository = $reservationRepository;
-    //     $this->userRepository = $userRepository;
-    //     $this->mailer = $mailer;
-    //     $this->reservationService = $reservationService;
-    //     $this->security = $security;
+        $this->reservationRepository = $reservationRepository;
+        $this->mailer = $mailer;
+        $this->reservationService = $reservationService;
     }
     public function sendEmail(Reservation $reservation): void
     {
@@ -40,7 +39,7 @@ class MailerService
                 ->text('You have booked for : ');
 
         $this->mailer->send($email);
-        //$this->reservationService->isReserved($reservation);
+        $this->reservationService->isReserved($reservation);
     
     }
 }

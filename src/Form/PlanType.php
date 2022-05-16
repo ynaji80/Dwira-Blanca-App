@@ -29,10 +29,10 @@ class PlanType extends AbstractType
             ->add('description',TextareaType::class)
             ->add('type',ChoiceType::class,[
                 'choices'  => [
-                    'Restaurant' => 'Restaurant',
-                    'Museum' => 'Museeum',
-                    'Park' => 'Park',
-                    'Shopping' => 'Shopping'
+                    'Restaurant' => 'restaurant',
+                    'Museum' => 'museum',
+                    'Park' => 'park',
+                    'Shopping' => 'shopping'
                 ],])
             ->add('rating')
             ->add('longitude')

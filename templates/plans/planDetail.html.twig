@@ -81,7 +81,15 @@
 
               </div>
                 <div class="border-b mt-5 border-gray-500"></div>
-                <div class="mt-10">
+                {% if app.user.id == plan.user.id  %}
+                <div class="ps-3 pb-3 mt-5"> 
+                        <a href="{{  path('app_plans_edit',{slug: plan.slug}) }}" class="btn btn-outline-dark">Edit</a> 
+                        <a href="#" onclick="event.preventDefault(); confirm('Are you sure?') && document.getElementById('js-plan-delete-form').submit(); " class="btn btn-outline-dark">Delete</a>
+                
+                </div>
+                    
+                {% else %}
+                    <div class="mt-10">
                     <h1 class="text-4xl font-semibold leading-9 text-gray-800 ">Book Now</h1>
                     {{ form_start(reservationForm) }}
                         <div class="form-group row mt-5 mb-5 ">
@@ -108,6 +116,8 @@
                     
                     {{ form_end(reservationForm) }}
                 </div>
+                {% endif %}
+                
                   </div> 
             <div class="flex flex-col mt-10">
                 <div class="mb-4 w-80  px-2 py-4 bg-gray-100 rounded border-sky-700 border-b-2 border-l-2 border-r-2 border-t-8">
@@ -178,4 +188,8 @@
         </div>
     </section>
 </section>
+<form id="js-plan-delete-form" action="{{ path('app_plans_delete',{slug: plan.slug}) }}" method="post" style="display:none;"> 
+  <input type="hidden" name="csrf_token" value="{{ csrf_token('plan_deletion'~ plan.slug) }}">
+  <input type="hidden" name="_method" value="DELETE">
+</form>
 {% endblock %}

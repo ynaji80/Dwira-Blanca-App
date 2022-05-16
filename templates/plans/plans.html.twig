@@ -12,24 +12,33 @@
         </div>
         
         <div class=" flex px-20 py-4 space-x-2 ">
-            <button class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
+            <a href="{{ path('app_plans',{filter: "topRated"}) }}" class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
                 <p class=" text-gray-800 text-base">Top rated</p>
-            </button>
-            <button class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
-                <p class=" text-gray-800 text-base">Most reviewed</p>
-            </button>
-            <button class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
-                <p class=" text-gray-800 text-base">Restaurants</p>
-            </button>
-            <button class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
-                <p class=" text-gray-800 text-base">Museums</p>
-            </button>
+            </a>
+            <a href="{{ path('app_plans',{filter: "restaurant"}) }}" class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
+                <p class=" text-gray-800 text-base">Restaurant</p>
+            </a>    
+            <a href="{{ path('app_plans',{filter: "museum"}) }}" class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
+                <p class=" text-gray-800 text-base">Museum</p>
+            </a>
+            <a href="{{ path('app_plans',{filter: "park"}) }}" class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
+                <p class=" text-gray-800 text-base">Park</p>
+            </a>
+            <a  href="{{ path('app_plans',{filter: "shopping"}) }}" class=" bg-gray-200 px-4 py-2 rounded-full shadow-sm">
+                <p class=" text-gray-800 text-base">Shopping</p>
+            </a>
         </div>
         <div class=" mx-auto flex px-20 space-x-4 ">
             <div class="flex flex-col flex-wrap space-y-4 lg:w-1/2 lg:text-left text-center">
-            {% for plan in plans %}
+            {% if plans|length %}
+                {% for plan in plans %}
                 {% include 'plans/planCard.html.twig' with {slug: plan.slug , "title": plan.title, "description": plan.description, "type": plan.type, "rating": plan.rating}  %}
             {% endfor %}
+            {% else %}
+                        <p class="text-xl text-gray-800 font-bold"> These are no places.</p>
+                   
+            {% endif %}
+            
                 
             </div>
             <div class="lg:w-1/2 w-full  rounded-lg overflow-hidden">

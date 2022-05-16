@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="row">
-   <div class="col-md-6 mx-auto text-center">
+   <div class="col-md-2 mx-auto text-center">
       <h1>Profile</h1>
       <img src="{{ app.user.gravatar(300) }}" alt="Avatar {{ app.user.userName }}" class="mt-5 rounded-circle">
       <h2 class="mt-5"> {{ app.user.firstName }} {{ app.user.lastName }} </h2>
@@ -12,7 +12,7 @@
 
             <p class="lead"> {{ app.user.email }} </p>
                  <p><small>Account created at {{ app.user.createdAt|date('d/m/Y') }} </small></p>
-            <a href="{{  path('app_profile_edit')}}"> Edit Profile </a>
+           <button type="button" class="btn btn-outline-info mt-3 mb-3"><a href="{{  path('app_profile_edit')}}"> Edit Profile </a></button> 
 
     </div>
 </div>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Service\PostService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,13 +21,14 @@ class PostsController extends AbstractController
     #[Route('/', name: 'app_posts',methods: 'GET')]
     public function index(PostRepository $postRepository): Response
     {
-       $this->denyAccessUnlessGranted('ROLE_USER');
+      
         $post = $postRepository->findBy([],['createdAt'=>'DESC']);
         return $this->render('posts/index.html.twig', ['posts' => $post]);
     }
 
     #[Route('/posts/create', name: 'app_posts_create', methods: 'GET|POST')]
-    public function create(Request $request,EntityManagerInterface $em): Response
+    #[Security("is_granted('ROLE_USER') ")]
+    public function create(Request $request, PostService $postService): Response
     {
       $this->denyAccessUnlessGranted('ROLE_USER');
       $post = new Post;
@@ -36,8 +38,7 @@ class PostsController extends AbstractController
 
        if($form->isSubmitted() && $form->isValid()){
           $post->setUser($this->getUser());
-          $em->persist($post);
-          $em->flush();
+          $postService->createPost($post);
 
           $this->addFlash('success','Post succefully created !');
 
@@ -49,14 +50,14 @@ class PostsController extends AbstractController
         'formPosts'=>$form->createView()]);
     }
 
-    #[Route('/posts/{id<[0-9]+>}', name: 'app_posts_details', methods:'GET')]
+    #[Route('/posts/{slug}', name: 'app_posts_details', methods:'GET')]
     public function show(Post  $post): Response
     {
       $this->denyAccessUnlessGranted('ROLE_USER');
       return $this->render('posts/show.html.twig', compact('post'));
     }
 
-    #[Route('/posts/{id<[0-9]+>}/edit}', name: 'app_posts_edit', methods:'GET|POST')]
+    #[Route('/posts/{slug}/edit', name: 'app_posts_edit', methods:'GET|POST')]
     #[Security("is_granted('ROLE_USER') && post.getUser()==user")]
     public function edit(Post $post,EntityManagerInterface $em,Request $request): Response
     {
@@ -79,11 +80,11 @@ class PostsController extends AbstractController
       ]);
     }
 
-    #[Route('/posts/{id<[0-9]+>}', name: 'app_posts_delete', methods:'DELETE')]
+    #[Route('/posts/{slug}', name: 'app_posts_delete', methods:'DELETE')]
     #[Security("is_granted('ROLE_USER') && post.getUser()==user")]
     public function delete(Post $post,EntityManagerInterface $em,Request $request): Response
     {
-      if($this->isCsrfTokenValid('post_deletion'.$post->getId(), $request->request->get('csrf_token'))){
+      if($this->isCsrfTokenValid('post_deletion'.$post->getSlug(), $request->request->get('csrf_token'))){
         $em->remove($post);
         $em->flush();
         $this->addFlash('info','Post succefully deleted !');

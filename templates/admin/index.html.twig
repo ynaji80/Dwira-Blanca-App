@@ -1,7 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends '@EasyAdmin/layout.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Hello Admin!{% endblock %}
 
-{% block body %}
-<h1> Hi Admin !</h1>
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Administration</h1>
+        <p class="lead">Welcome to dashboard</p>
+    </div>
+    
+
 {% endblock %}

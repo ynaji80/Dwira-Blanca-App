@@ -50,7 +50,18 @@ class PlanRepository extends ServiceEntityRepository
     /**
      * @return Plan[]
      */
-    public function getPlans()
+    public function getPlansByType($type)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.isActive=1 and p.type = :val')
+            ->setParameter('val', $type)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * @return Plan[]
+     */
+    public function getTopRatedPlans()
     {
         return $this->createQueryBuilder('p')
             ->orderBy('p.rating', 'DESC')

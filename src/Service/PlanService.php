@@ -20,7 +20,7 @@ class PlanService
     {
         $plan->setIsActive(true)
             ->setCalendar(["Monday"=>"10:23","Tuesday"=>"10:23","Wednesday"=>"10:23","Thursday"=>"10:23","Friday"=>"10:23","Saturday"=>"10:23","Sunday"=>""])
-            ->setSlug("slug-slgu");
+            ->setSlug('slug-plan'.strval(rand()));
 
         $this->manager->persist($plan);
         $this->manager->flush();

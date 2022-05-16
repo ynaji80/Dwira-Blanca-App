@@ -27,7 +27,7 @@
      <div class="ps-3 pb-3 mt-5"> 
     {% if app.user.id == post.user.id  %}
     
-        <a href="{{  path('app_posts_edit',{id: post.id}) }}" class="btn btn-outline-dark">Edit</a> 
+        <a href="{{  path('app_posts_edit',{slug: post.slug}) }}" class="btn btn-outline-dark">Edit</a> 
         <a href="#" onclick="event.preventDefault(); confirm('Are you sure?') && document.getElementById('js-post-delete-form').submit(); " class="btn btn-outline-dark">Delete</a>
    
 		{% endif %}
@@ -42,8 +42,8 @@
 
 
 
-<form id="js-post-delete-form" action="{{  path('app_posts_delete',{id: post.id}) }}" method="post" style="display:none;"> 
-  <input type="hidden" name="csrf_token" value="{{ csrf_token('post_deletion'~ post.id) }}">
+<form id="js-post-delete-form" action="{{  path('app_posts_delete',{slug: post.slug}) }}" method="post" style="display:none;"> 
+  <input type="hidden" name="csrf_token" value="{{ csrf_token('post_deletion'~ post.slug) }}">
   <input type="hidden" name="_method" value="DELETE">
 </form>
 {% endblock %}
