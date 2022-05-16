@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'New Plan' %}
+
+
+{% block body %}
+ 
+     <div class="row mb-10">
+         <div class="col-md-6 mx-auto">
+      
+      <h1> Create Plan</h1>
+   
+      {{ form_start(formPlan)}}
+      
+      {{ form_widget(formPlan)}}
+
+      <input type="submit" value="Create Plan" class="btn btn-outline-dark">
+      {{ form_end(formPlan)}}
+
+         </div>
+     </div>
+ 
+   
+
+{% endblock %}
+ 

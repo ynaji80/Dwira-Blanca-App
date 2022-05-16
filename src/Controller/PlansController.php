@@ -9,6 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Reservation;
+use App\Form\PlanType;
+use App\Form\ReservationType;
+use App\Service\MailerService;
+use App\Service\PlanService;
+use App\Service\ReservationService;
+use Symfony\Component\Mailer\MailerInterface;
 
 class PlansController extends AbstractController
 {
@@ -32,9 +39,46 @@ class PlansController extends AbstractController
             'plans' => $plans,
         ]);
     }
-    #[Route('/plans/{slug}', name: 'app_plan_show', methods: ["GET"])]
-    public function show(Plan $plan): Response
+    #[Route('/plans/{slug}', name: 'app_plan_show', methods: ["GET|POST"])]
+    public function show(Plan $plan,Request $request, ReservationService $reservationService, MailerService $mailer): Response
     {
-        return $this->render("plans/planDetail.html.twig", ["plan" => $plan]);
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+             $reservation=$form->getData();
+             $reservationService->persistReservation($reservation, $plan->getName(), $plan->getUser()->getEmail());
+             $mailer->sendEmail($reservation);
+             return $this->redirectToRoute("app_plan_show",['slug'=>$plan->getSlug()]);
+        }
+
+        return $this->render("plans/planDetail.html.twig", [
+            'reservationForm' => $form->createView(),
+            "plan" => $plan,
+        ]);
+    }
+
+    #[Route('/plan/create', name: 'app_plan_create', methods: 'GET|POST')]
+    public function create(Request $request, PlanService $planService ): Response
+    {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $plan = new Plan;
+        $form= $this->createForm(PlanType::class,$plan);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $plan=$form->getData();
+            $plan->setUser($this->getUser());
+            $planService->createPlan($plan);
+            $this->addFlash('success','plan succefully created !');
+
+            return $this->redirectToRoute('app_plans');
+
+        }
+
+        return $this->render('plans/create.html.twig',[
+            'formPlan'=>$form->createView()]);
     }
 }
